@@ -1,5 +1,8 @@
 const BASE_URL = "https://openlibrary.org";
 
+// Open Library API Service
+// digunakan untuk fetch data buku trending, detail, dan search
+
 export async function getTrendingBooks() {
   const response = await fetch(`${BASE_URL}/trending/daily.json`);
 
