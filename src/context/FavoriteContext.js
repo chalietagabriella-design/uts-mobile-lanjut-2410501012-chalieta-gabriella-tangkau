@@ -1,3 +1,6 @@
+// FavoriteContext: digunakan untuk mengelola state buku favorit
+// menggunakan Context API + useReducer
+
 import React, { createContext, useContext, useReducer } from "react";
 
 const FavoriteContext = createContext();
