@@ -74,10 +74,15 @@ Debugging tidak selengkap Redux
 
 # Referensi
 https://docs.expo.dev/
+
 https://reactnavigation.org/
+
 https://openlibrary.org/developers/api
+
 https://react.dev/reference/react/useReducer
+
 https://stackoverflow.com/
+
 https://www.youtube.com/
 
 # Refleksi Pengerjaan
