@@ -15,6 +15,9 @@ import { getTrendingBooks } from "../api/openLibrary";
 import colors from "../styles/colors";
 import typography from "../styles/typography";
 
+// HomeScreen: menampilkan daftar buku dari API Open Library
+// fitur: fetch data, loading indicator, error handling, dan pull-to-refresh
+
 export default function HomeScreen({ navigation }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
