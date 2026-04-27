@@ -19,15 +19,22 @@ export default function SearchScreen({ navigation }) {
   const [inputError, setInputError] = useState("");
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   async function handleSearch() {
-    if (!query.trim()) {
+    const keyword = query.trim().toLowerCase();
+
+    if (!keyword) {
       setInputError("Input pencarian tidak boleh kosong.");
+      setBooks([]);
+      setHasSearched(false);
       return;
     }
 
-    if (query.trim().length < 3) {
+    if (keyword.length < 3) {
       setInputError("Kata kunci minimal 3 karakter.");
+      setBooks([]);
+      setHasSearched(false);
       return;
     }
 
@@ -35,14 +42,49 @@ export default function SearchScreen({ navigation }) {
       setInputError("");
       setApiError("");
       setLoading(true);
+      setHasSearched(true);
 
       const data = await searchBooks(query);
-      setBooks(data);
+
+      const filteredBooks = data.filter((book) =>
+        book.title?.toLowerCase().includes(keyword)
+      );
+
+      setBooks(filteredBooks);
     } catch (error) {
       setApiError("Gagal mencari buku. Coba lagi nanti.");
+      setBooks([]);
     } finally {
       setLoading(false);
     }
+  }
+
+  function renderEmptyState() {
+    if (loading) {
+      return null;
+    }
+
+    if (hasSearched && books.length === 0 && !apiError) {
+      return (
+        <View style={styles.emptyBox}>
+          <Ionicons name="sad-outline" size={58} color={colors.primary} />
+          <Text style={styles.emptyTitle}>Buku tidak ditemukan</Text>
+          <Text style={styles.emptyText}>
+            Judul buku tidak sesuai dengan kata kunci pencarian.
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.emptyBox}>
+        <Ionicons name="search-outline" size={54} color={colors.primary} />
+        <Text style={styles.emptyTitle}>Mulai cari buku</Text>
+        <Text style={styles.emptyText}>
+          Masukkan minimal 3 karakter untuk mencari buku.
+        </Text>
+      </View>
+    );
   }
 
   return (
@@ -58,7 +100,11 @@ export default function SearchScreen({ navigation }) {
           style={styles.input}
           placeholder="Contoh: Harry Potter"
           value={query}
-          onChangeText={setQuery}
+          onChangeText={(text) => {
+            setQuery(text);
+            setInputError("");
+            setApiError("");
+          }}
         />
       </View>
 
@@ -70,7 +116,11 @@ export default function SearchScreen({ navigation }) {
       </TouchableOpacity>
 
       {loading ? (
-        <ActivityIndicator size="large" color={colors.primary} style={styles.loading} />
+        <ActivityIndicator
+          size="large"
+          color={colors.primary}
+          style={styles.loading}
+        />
       ) : null}
 
       {apiError ? <Text style={styles.error}>{apiError}</Text> : null}
@@ -85,17 +135,7 @@ export default function SearchScreen({ navigation }) {
           />
         )}
         contentContainerStyle={{ paddingBottom: 115 }}
-        ListEmptyComponent={
-          !loading ? (
-            <View style={styles.emptyBox}>
-              <Ionicons name="search-outline" size={54} color={colors.primary} />
-              <Text style={styles.emptyTitle}>Mulai cari buku</Text>
-              <Text style={styles.emptyText}>
-                Masukkan minimal 3 karakter untuk mencari buku.
-              </Text>
-            </View>
-          ) : null
-        }
+        ListEmptyComponent={renderEmptyState}
       />
     </View>
   );

@@ -30,6 +30,7 @@ export default function HomeScreen({ navigation }) {
       const data = await getTrendingBooks();
       setBooks(data);
     } catch (err) {
+      setBooks([]);
       setError("Gagal memuat data buku. Periksa koneksi internet.");
     } finally {
       setLoading(false);
@@ -46,6 +47,13 @@ export default function HomeScreen({ navigation }) {
     fetchBooks();
   }, []);
 
+  function handleRetry() {
+    setLoading(true);
+    setError("");
+    setBooks([]);
+    fetchBooks();
+  }
+
   if (loading) {
     return (
       <SafeAreaView style={styles.center}>
@@ -55,26 +63,10 @@ export default function HomeScreen({ navigation }) {
     );
   }
 
-  if (error && books.length === 0) {
-    return (
-      <SafeAreaView style={styles.center}>
-        <View style={styles.errorBox}>
-          <Ionicons name="wifi-outline" size={60} color={colors.danger} />
-          <Text style={styles.errorTitle}>Oops, data gagal dimuat</Text>
-          <Text style={styles.errorMessage}>{error}</Text>
-
-          <TouchableOpacity style={styles.retryButton} onPress={fetchBooks}>
-            <Text style={styles.retryText}>Coba Lagi</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={books}
+        data={error ? [] : books}
         keyExtractor={(item, index) => item.key || index.toString()}
         ListHeaderComponent={
           <>
@@ -110,7 +102,9 @@ export default function HomeScreen({ navigation }) {
 
             <View style={styles.statsRow}>
               <View style={styles.statCard}>
-                <Text style={styles.statNumber}>{books.length}</Text>
+                <Text style={styles.statNumber}>
+                  {error ? 0 : books.length}
+                </Text>
                 <Text style={styles.statLabel}>Books</Text>
               </View>
 
@@ -121,7 +115,9 @@ export default function HomeScreen({ navigation }) {
 
               <View style={styles.statCard}>
                 <Text style={styles.statNumber}>API</Text>
-                <Text style={styles.statLabel}>Online</Text>
+                <Text style={styles.statLabel}>
+                  {error ? "Offline" : "Online"}
+                </Text>
               </View>
             </View>
 
@@ -140,6 +136,26 @@ export default function HomeScreen({ navigation }) {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         contentContainerStyle={{ paddingBottom: 115 }}
+        ListEmptyComponent={
+          error ? (
+            <View style={styles.emptyErrorBox}>
+              <Ionicons
+                name="cloud-offline-outline"
+                size={60}
+                color={colors.danger}
+              />
+              <Text style={styles.emptyErrorTitle}>Gagal memuat buku</Text>
+              <Text style={styles.emptyErrorText}>
+                Periksa koneksi internet kamu lalu tekan tombol Coba Lagi atau
+                tarik layar ke bawah untuk refresh.
+              </Text>
+
+              <TouchableOpacity style={styles.retryButton} onPress={handleRetry}>
+                <Text style={styles.retryText}>Coba Lagi</Text>
+              </TouchableOpacity>
+            </View>
+          ) : null
+        }
       />
     </SafeAreaView>
   );
@@ -262,22 +278,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "700",
   },
-  errorBox: {
-    width: "100%",
-    backgroundColor: "#fff",
+  emptyErrorBox: {
+    margin: 24,
     padding: 28,
+    backgroundColor: "#fff",
     borderRadius: 28,
     alignItems: "center",
-    elevation: 5,
+    elevation: 4,
   },
-  errorTitle: {
+  emptyErrorTitle: {
     marginTop: 14,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "900",
     color: colors.text,
     textAlign: "center",
   },
-  errorMessage: {
+  emptyErrorText: {
     marginTop: 8,
     color: colors.muted,
     textAlign: "center",

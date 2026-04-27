@@ -4,6 +4,16 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "../styles/colors";
 
 export default function AboutScreen() {
+  const techStack = [
+    "React Native",
+    "Expo",
+    "React Navigation",
+    "Fetch API",
+    "Context API",
+    "useReducer",
+    "Open Library API",
+  ];
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.wrapper}>
       <View style={styles.topBg}>
@@ -45,6 +55,18 @@ export default function AboutScreen() {
           <Text style={styles.infoText}>React Native + Expo</Text>
         </View>
 
+        <View style={styles.techBox}>
+          <Text style={styles.techTitle}>Tech Stack</Text>
+
+          <View style={styles.techWrap}>
+            {techStack.map((item, index) => (
+              <View key={index} style={styles.techBadge}>
+                <Text style={styles.techText}>{item}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
         <View style={styles.descBox}>
           <Text style={styles.descTitle}>Tentang Aplikasi</Text>
           <Text style={styles.description}>
@@ -84,13 +106,14 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     borderWidth: 5,
     borderColor: "#fff",
-    backgroundColor: colors.softPurple,
+    backgroundColor: colors.softBlue,
   },
   name: {
     marginTop: 16,
     color: "#fff",
     fontSize: 22,
     fontWeight: "900",
+    textAlign: "center",
   },
   nim: {
     marginTop: 6,
@@ -126,7 +149,7 @@ const styles = StyleSheet.create({
   infoItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.softPurple,
+    backgroundColor: colors.softBlue,
     padding: 15,
     borderRadius: 20,
     marginBottom: 10,
@@ -136,6 +159,36 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     color: colors.text,
     fontWeight: "800",
+    lineHeight: 22,
+  },
+  techBox: {
+    marginTop: 14,
+    padding: 18,
+    backgroundColor: colors.background,
+    borderRadius: 24,
+  },
+  techTitle: {
+    fontSize: 20,
+    fontWeight: "900",
+    color: colors.text,
+    marginBottom: 14,
+  },
+  techWrap: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  techBadge: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 20,
+    elevation: 2,
+  },
+  techText: {
+    color: "#fff",
+    fontWeight: "900",
+    fontSize: 13,
   },
   descBox: {
     marginTop: 14,
