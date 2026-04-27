@@ -34,19 +34,19 @@ npx expo start
 
 # Screenshot Aplikasi
 ### Home Screen
-![Home](screenshots/home.png)
+![Home](./screenshots/home.png)
 
 ### Detail Screen
-![Detail](screenshots/detail.png)
+![Detail](./screenshots/detail.png)
 
 ### Favorite Screen
-![Favorite](screenshots/favorite.png)
+![Favorite](./screenshots/favorite.png)
 
 ### Search Screen
-![Search](screenshots/search.png)
+![Search](./screenshots/search.png)
 
 ### About Screen
-![About](screenshots/about.png)
+![About](./screenshots/about.png)
 
 # Video Demo
 Link Youtube video demo : https://youtu.be/VSgCEEvxQJw?si=t0nG4-ddJ2Q7z42p
