@@ -7,6 +7,7 @@ Kelas: B
 
 # Tema Project
 Tema C: BookShelf - Katalog Buku
+
 Aplikasi mobile sederhana berbasis React Native + Expo yang menampilkan katalog buku dari Open Library API, dilengkapi fitur pencarian, detail buku, dan favorit.
 
 # Tech Stack
