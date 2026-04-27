@@ -54,5 +54,7 @@ BookShelf adalah aplikasi katalog buku berbasis React Native dan Expo. Aplikasi 
 
 ## Cara Install
 
+## Update fitur UI
+
 ```bash
 npm install
