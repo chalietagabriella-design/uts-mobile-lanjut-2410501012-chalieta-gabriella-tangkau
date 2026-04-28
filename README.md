@@ -52,9 +52,9 @@ npx expo start
 ![About](./screenshots/about.png)
 
 # Video Demo
-Link Youtube video demo : https://youtu.be/VSgCEEvxQJw?si=t0nG4-ddJ2Q7z42p
+Link Youtube video demo : https://youtu.be/AnW9-AbCf9g?si=tddidHfwvQwhDNx8
 
-Link Google Drive video demo : https://drive.google.com/file/d/1-2OIJ11P2SQV6nNAKnloBsACgAPXkqUt/view?usp=drivesdk
+Link Google Drive video demo : https://drive.google.com/file/d/1NeJhoTN4mDqizQhBQy91WEooGdSZw2O0/view?usp=drivesdk
 
 # State Management
 Aplikasi ini menggunakan Context API + useReducer untuk mengelola state favorit.
